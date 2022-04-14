@@ -6,22 +6,23 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./interfaces/IMalevolent.sol";
 import "hardhat/console.sol";
 
-contract NFT is ERC721 , Ownable{
+contract NFT is IMalevolent, ERC721 , Ownable{
     using Counters for Counters.Counter;
      using Strings for uint256;
       Counters.Counter private _tokenIds;
        address public auction;
 
-       uint256 public maxSupply = 4900;
+       uint256 private _maxSupply = 5;//4901;
 
-        uint256 public rarity1 = 1;//1 
-        uint256 public rarity2 = 2451;//2 
-        uint256 public rarity3 = 4901; //3
+        uint256 private rarity1 = 0;//1 
+        uint256 private rarity2 = 2;//2451;//2 
+        uint256 private rarity3 = 5;//4901; //3
 
-        uint256 public rarity1_limit = 2450;//1
-        uint256 public rarity2_limit = 4900;//2
+        uint256 public rarity1_limit = 2;//2450;//1
+        uint256 public rarity2_limit = 4;//4900;//2
         
     
         uint256[] _allTokens;
@@ -56,8 +57,8 @@ contract NFT is ERC721 , Ownable{
     
 
     function baseURI() public view returns(string memory){
-       
-        return "https://ipfs.io/ipfs/QmdZzz5vtgXMeYKKfYi795hze1GdMfxbyP4CLDFy4MUXEz/";
+        string memory _uri = "https://ipfs.io/ipfs/QmdZzz5vtgXMeYKKfYi795hze1GdMfxbyP4CLDFy4MUXEz/";
+        return _uri;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
@@ -84,6 +85,20 @@ contract NFT is ERC721 , Ownable{
         _tokenURIs[tokenId] = _tokenURI;
     }
 
+    function maxSupply() public override view returns(uint256){
+        return _maxSupply;
+    }
+
+    function rarity1_() public override view returns(uint256){
+        return rarity1;
+    }
+     function rarity2_() public override view returns(uint256){
+        return rarity2;
+    }
+
+    function rarity2_startlimit_() public override view returns(uint256){
+        return 2;
+    }
    
 
     function addOwner(address owner_) public {
@@ -91,16 +106,24 @@ contract NFT is ERC721 , Ownable{
         _owner[owner_]=true;
     }
 
-    function createToken(address account,uint8 nftType) public returns(uint) {
+    function startAuction() private {
+        if(_tokenIds.current() == rarity2_limit){
+             _tokenIds.increment();
+           // _mint(auction, rarity3);
+             _mint(auction, rarity3);
+        }
+    }
+
+    function createToken(address account,uint8 _nftType) public override returns(uint) {
         //require(_owner[_msgSender()]==true,"Not authorized to mint"); //must uncomment
-        require(_tokenIds.current() < 3638 ,"all NFTs Minted");
+        require(_tokenIds.current() < rarity2_limit ,"all NFTs Minted");
         
         _tokenIds.increment();
-        uint256 newItemId = inc_nftType(nftType);
+        uint256 newItemId = inc_nftType(_nftType);
 
         _mint(account, newItemId);
         
-        
+        startAuction();
         return newItemId;
     }
 
@@ -116,17 +139,17 @@ contract NFT is ERC721 , Ownable{
 
     function inc_nftType(uint8 no) private returns(uint256){
             if(no==1){
-                require(rarity1<rarity1_limit,"all Rare trains minted");
+                require(rarity1<rarity1_limit,"all fallen angels minted");
                 
                 return rarity1++;
             }else if(no==2){
-                require(rarity2<rarity2_limit,"all Epic trains minted");
+                require(rarity2<rarity2_limit,"all guardian angels minted");
                 
                 return rarity2++;
             }
             else{
-
                 require(false,"Type not found");
+                return 0;
             }
     }
 
@@ -136,7 +159,7 @@ contract NFT is ERC721 , Ownable{
     }
 
     function tokenByIndex(uint256 index) public view virtual  returns (uint256) {
-        require(index <= maxSupply, "ERC721Enumerable: global index out of bounds");
+        require(index <= maxSupply(), "ERC721Enumerable: global index out of bounds");
         return _allTokens[index];
     }
 
@@ -213,8 +236,8 @@ contract NFT is ERC721 , Ownable{
         _allTokens.push(tokenId);
     }
 
-    function AirDrop(address account,uint8 nftType) public onlyOwner {
-        createToken(account,nftType);
+    function AirDrop(address account,uint8 _nftType) public onlyOwner {
+        createToken(account,_nftType);
     }
 
     function toString(uint256 value) internal pure returns (string memory) {

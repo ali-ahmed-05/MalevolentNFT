@@ -7,13 +7,15 @@ async function mineNBlocks(n) {
   }
 }
 
-describe("Albert nft ",  function ()  {
+describe("malevolent nft ",  function ()  {
 
   
-  let NFTsale
-  let nFTsale
-  let NFTpaymentSplitter
-  let nFTpaymentSplitter
+  let NFT
+  let nFT
+  let NFTCrowdsale
+  let nFTCrowdsale
+  let Auction
+  let auction
 
 
 
@@ -22,65 +24,93 @@ describe("Albert nft ",  function ()  {
   it("Should deploy all smart contracts", async function () {
 
     [_,per1,per2,per3] = await ethers.getSigners()
+
+    NFTCrowdsale = await ethers.getContractFactory("NFTCrowdsale")
+    nFTCrowdsale =await NFTCrowdsale.deploy()
+    await nFTCrowdsale.deployed()  
     
-    NFTpaymentSplitter = await ethers.getContractFactory("NFTpaymentSplitter")
-    nFTpaymentSplitter =await NFTpaymentSplitter.deploy()
-    await nFTpaymentSplitter.deployed()  
-  
-    NFTsale = await ethers.getContractFactory("NFTsale")
-    nFTsale =await NFTsale.deploy(nFTpaymentSplitter.address)
-    await nFTsale.deployed()  
+    NFT = await ethers.getContractFactory("NFT")
+    nFT =await NFT.deploy(nFTCrowdsale.address)
+    await nFT.deployed() 
     
-    let pend = await nFTsale.SalePrice()
-    console.log("pending",pend.toString())
+    Auction = await ethers.getContractFactory("Auction")
+    auction =await Auction.deploy()
+    await auction.deployed() 
+
+
+    await nFTCrowdsale.setNFTaddress(nFT.address)
+    await auction.setNFTaddress(nFT.address)
+    await nFT.setAuctionAddress(auction.address)
+    await auction.setPaymentaddress(_.address)
+    
    
   });
  
   it("Should buy", async function () {
     
-    //let _value = await ethers.utils.parseEther('5')
-    let approve = await nFTsale.buyToken(50,{value:250})
-    await approve.wait()
+    let _value = await ethers.utils.parseEther('0.1')
+    await nFTCrowdsale.startSale([_.address,per1.address],per3.address)
 
-    let pend = await nFTpaymentSplitter.pendingPayment("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    console.log("pending",pend.toString())
+    await nFTCrowdsale.buyNFT(1,{value : _value})
+   // await nFTCrowdsale.buyNFT(1,{value : _value})
+    
+   // await nFTCrowdsale.buyNFT(1,{value : _value})
+    await nFTCrowdsale.buyNFT(2,{value : _value})
+ //   await nFTCrowdsale.buyNFT(2,{value : _value})
+    //await nFTCrowdsale.buyNFT(2,{value : _value})
+    await mineNBlocks(6647)
+     _value = await ethers.utils.parseEther('0.2')
+    await nFTCrowdsale.buyNFT(1,{value : _value})
+    await nFTCrowdsale.buyNFT(2,{value : _value})
+    // await nFTCrowdsale.buyNFT(2,{value : _value})
 
-     approve = await nFTsale.buyToken(1,{value:5})
-    await approve.wait()
-
-     pend = await nFTpaymentSplitter.pendingPayment("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    console.log("pending",pend.toString())
+    let owner =await nFT.ownerOf(5)
+    console.log(owner , auction.address)
+    
+   
   });
-  it("states", async function () {
-    let _value = await ethers.utils.parseUnits('30000')
-    let tx = await nFTpaymentSplitter.release("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    await tx.wait()
-    
-    
-    tx = await nFTpaymentSplitter.released("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    console.log("released :",tx.toString())
+  it("start auction", async function () {
+   let _value = await ethers.utils.parseEther('0.5')
+    await auction.startAuction(_value, 1 )
+   
     
     
   });
-  it("Should buy", async function () {
+  it("Should bid", async function () {
     
-    //let _value = await ethers.utils.parseEther('5')
+    let _value = await ethers.utils.parseEther('0.5')
+    await auction.bid({value : _value})
+    _value = await ethers.utils.parseEther('1')
+    await auction.connect(per2).bid({value : _value})
+    _value = await ethers.utils.parseEther('10')
+    await auction.connect(per2).bid({value : _value})
+    _value = await ethers.utils.parseEther('20')
+    await auction.connect(per1).bid({value : _value})
+    _value = await ethers.utils.parseEther('100')
+    await auction.connect(per1).bid({value : _value})
+    await mineNBlocks(6647)
+    
+    // _value = await ethers.utils.parseEther('0.7')
+    // await auction.connect(per1).bid({value : _value})
 
-    let approve = await nFTsale.buyToken(1,{value:5})
-    await approve.wait()
-
-    let pend = await nFTpaymentSplitter.pendingPayment("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    console.log("pending",pend.toString())
+    
   });
-  it("states", async function () {
-    let _value = await ethers.utils.parseUnits('30000')
-    let tx = await nFTpaymentSplitter.release("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    await tx.wait()
+
+  it("return bids", async function () {
+       console.log("Account balance:", (await per2.getBalance()).toString());
+       await auction.connect(per2).withdraw()
+       
+       console.log("Account balance:", (await per2.getBalance()).toString());
+      });
+
+  it("conclude", async function () {
+    await mineNBlocks(6647)
+    console.log("Account balance:", (await _.getBalance()).toString());
+    await auction.concludeAuction()
     
-    
-    tx = await nFTpaymentSplitter.released("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")
-    console.log("released :",tx.toString())
-    
+    let owner =await nFT.ownerOf(5)
+    console.log(owner , per1.address)
+    console.log("Account balance:", (await _.getBalance()).toString());
     
   });
 // //   it("Should stake zpad", async function () {
