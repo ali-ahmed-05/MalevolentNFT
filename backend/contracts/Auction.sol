@@ -160,7 +160,7 @@ contract Auction is Context , Ownable, ERC721Holder{
     require(_msgSender() == highestBidder || _msgSender() == owner()," caller is not the owner ");
 
      uint256 payment = highestBid * 1 wei;
-     IERC721(nft).transferFrom(address(this), highestBidder , IMalevolent(nft).rarity2_()+1);
+     IERC721(nft).transferFrom(address(this), highestBidder , IMalevolent(nft).maxSupply());
      payable(address(_wallet)).transfer(payment);
 
     }

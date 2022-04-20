@@ -20,9 +20,12 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     // The token being sold
     IERC20 private _token;
     address private nft;
+    address private nft_angel;
+    address private nft_guardian;
     // Address where funds are collected
     address payable private _wallet;
     address payable public _manager;
+    address public auction;
 
     uint256 public startTime;
     uint256 public blocksPerDay = 6647;
@@ -51,19 +54,31 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     uint256 limitationtime = block.timestamp + 7776000   * 1 seconds;
     mapping(address => bool) private _whitelist;
    
-    function setNFTaddress(address _nft)public onlyOwner{
+    function setAngelNFTaddress(address _nft)public onlyOwner{
         require(_nft !=address(0),"invalid address");
-        nft = _nft;
+        nft_angel = _nft;
+    }
+
+    function setGuardNFTaddress(address _nft)public onlyOwner{
+        require(_nft !=address(0),"invalid address");
+        nft_guardian = _nft;
     }
 
     function setBlocksPerDay(uint256 _blocks) public onlyOwner {
         blocksPerDay = _blocks;
     }
 
+    function setAuctionAddress(address _auction) public onlyOwner {
+        require(_auction != address(0),"please add valid address");
+        auction = _auction;
+    }
+
     
-    function startSale(address[] memory accounts, address payable wallet_ ) public onlyOwner {
+    function startSale(address[] memory accounts, address payable wallet_ ) public onlyOwner { //once
+        require(startTime == 0 , "already started");
         require(accounts.length > 0 ,"add whitelist accounts");
         require(wallet_ !=address(0),"invalid address");
+        require(nft_angel != address(0),"set nft address");
             pub = false;
             for (uint256 i = 0; i < accounts.length; i++) {
                 _addPayee(accounts[i]);
@@ -127,9 +142,9 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         uint256 weiAmount = msg.value;
         require (weiAmount ==  price,"please provide exact amount for one NFT");
 
-        IMalevolent(nft).createToken(_msgSender(),_nftType);
+        IMalevolent(get_nftTypeAddress(_nftType)).createToken(_msgSender());
 
-        
+        startAuction();
         _nftPurchased ++;
 
         purchase[_msgSender()]++;
@@ -139,7 +154,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
     function Finalize() private returns(bool) {
         if(_nftPurchased>2){
-        if(pub && IMalevolent(nft).maxSupply() == _nftPurchased-2){
+        if(pub && totalSupply() == _nftPurchased-1){
            
             finalized = true;
         }}
@@ -148,21 +163,45 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
     function _addPayee(address account) private {
         require(account != address(0), "PaymentSplitter: account is the zero address");
-        _whitelist[account]=true;
-       
+        _whitelist[account]=true; 
     }
 
     function check_nftTypeCount(uint8 no) view  private {
             if(no==1){
-                console.log(IMalevolent(nft).rarity1_());
-                require(IMalevolent(nft).rarity1_()<1,"all fallen angels minted");
+                console.log(IMalevolent(get_nftTypeAddress(no)).totalSupply());
+                require(IMalevolent(get_nftTypeAddress(no)).totalSupply()<1,"all fallen angels minted");
             }else if(no==2){
-                console.log(IMalevolent(nft).rarity2_());
-                require(IMalevolent(nft).rarity2_() - IMalevolent(nft).rarity2_startlimit_()<1,"all guardian angels minted");
+                console.log(IMalevolent(get_nftTypeAddress(no)).totalSupply());
+                require( IMalevolent(get_nftTypeAddress(no)).totalSupply()< 1,"all guardian angels minted");
             }
             else{
                 require(false,"Type not found");
             }
+    }
+
+    function get_nftTypeAddress(uint8 no) view  private returns(address temp_nft) {
+            if(no==1){
+                temp_nft = nft_angel;
+            }else if(no==2){
+                temp_nft = nft_guardian;
+                }
+            else{
+                require(false,"Type not found");
+            }
+    }
+
+    function startAuction() private {
+        if(totalSupply() == maxSupply()){
+                IMalevolent(get_nftTypeAddress(2)).createToken(auction);
+        }
+    }
+
+    function totalSupply() public view returns(uint256 supply){
+         supply = IMalevolent(nft_angel).totalSupply() + IMalevolent(nft_guardian).totalSupply(); 
+    }
+
+    function maxSupply() public view returns(uint256 supply){
+         supply = IMalevolent(nft_guardian).maxSupply() - 1 ; 
     }
       
 }
