@@ -36,12 +36,34 @@ async function main() {
 
 
 
-  NFT = await ethers.getContractFactory("NFT")
-  nFT =await NFT.deploy()
-  await nFT.deployed()  
+    NFTCrowdsale = await ethers.getContractFactory("NFTCrowdsale")
+    nFTCrowdsale =await NFTCrowdsale.deploy()
+    await nFTCrowdsale.deployed()  
+    
+    NFT1 = await ethers.getContractFactory("FallenNFT")
+    nFT1 =await NFT1.deploy(nFTCrowdsale.address)
+    await nFT1.deployed() 
+
+    NFT2 = await ethers.getContractFactory("GuardianNFT")
+    nFT2 =await NFT2.deploy(nFTCrowdsale.address)
+    await nFT2.deployed() 
+    
+    Auction = await ethers.getContractFactory("Auction")
+    auction =await Auction.deploy()
+    await auction.deployed() 
+
+
+    await nFTCrowdsale.setAngelNFTaddress(nFT1.address)
+    await nFTCrowdsale.setGuardNFTaddress(nFT2.address)
+    await nFTCrowdsale.setAuctionAddress(auction.address)
+    await auction.setNFTaddress(nFT2.address)
+    await auction.setPaymentaddress(_.address)
   // use zpad address
 
-  console.log("nFTsale deployed to:", nFT.address);
+  console.log("nFTsale deployed to:", nFTCrowdsale.address);
+  console.log("nFTsale deployed to:", nFT1.address);
+  console.log("nFTsale deployed to:", nFT2.address);
+  console.log("nFTsale deployed to:", auction.address);
   // let i
   // for(i = 1 ; i<36 ; i++){       
   //   let approve = await nFT.createToken("0xa337275a57f9ad3cB17a761559c29fF990A7bf1F",i)
@@ -49,11 +71,11 @@ async function main() {
   // }
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(nFT);
+  saveFrontendFiles(nFTCrowdsale,nFT1,nFT2,auction);
 }
 //,nftPreSale,nftPubSale,nft
 
-function saveFrontendFiles(nFT) {
+function saveFrontendFiles(nFTCrowdsale,nFT1,nFT2,auction) {
   const fs = require("fs");
   const contractsDir = "../frontend/src/contract";
 
@@ -62,8 +84,10 @@ function saveFrontendFiles(nFT) {
   }
 
 let config = `
- "
- export const nFT_addr = "${NFT.address}"
+ "export const nFTCrowdsale_addr = "${nFTCrowdsale.address}"
+ "export const nFT1_addr = "${nFT1.address}"
+ "export const nFT2_addr = "${nFT2.address}"
+ "export const auction_addr = "${auction.address}"
 `
 
   let data = JSON.stringify(config)
@@ -71,28 +95,6 @@ let config = `
     contractsDir + '/addresses.js', JSON.parse(data)
 
   );
-
-  //   config =`[
-  //     "constructor()",
-  //     "event Approval(address indexed,address indexed,uint256)",
-  //     "event Transfer(address indexed,address indexed,uint256)",
-  //     "function allowance(address,address) view returns (uint256)",
-  //     "function approve(address,uint256) returns (bool)",
-  //     "function balanceOf(address) view returns (uint256)",
-  //     "function decimals() view returns (uint8)",
-  //     "function decreaseAllowance(address,uint256) returns (bool)",
-  //     "function increaseAllowance(address,uint256) returns (bool)",
-  //     "function name() view returns (string)",
-  //     "function symbol() view returns (string)",
-  //     "function totalSupply() view returns (uint256)",
-  //     "function transfer(address,uint256) returns (bool)",
-  //     "function transferFrom(address,address,uint256) returns (bool)"
-  //   ]`
-  //  data = JSON.stringify(config)
-  // fs.writeFileSync(
-  //   contractsDir + '/BUSD.json', JSON.parse(data)
-
-  // );
 
 }
 

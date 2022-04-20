@@ -123,6 +123,5 @@ describe("malevolent nft ",  function ()  {
     console.log("Account balance:", (await _.getBalance()).toString());
     
   });
-  
 
 });
