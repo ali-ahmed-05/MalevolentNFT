@@ -57,7 +57,8 @@ async function main() {
     await nFTCrowdsale.setGuardNFTaddress(nFT2.address)
     await nFTCrowdsale.setAuctionAddress(auction.address)
     await auction.setNFTaddress(nFT2.address)
-    await auction.setPaymentaddress(_.address)
+    await auction.setPaymentaddress(deployer.getAddress())
+    await nFTCrowdsale.startSale([deployer.getAddress(),deployer.getAddress()],deployer.getAddress())
   // use zpad address
 
   console.log("nFTsale deployed to:", nFTCrowdsale.address);

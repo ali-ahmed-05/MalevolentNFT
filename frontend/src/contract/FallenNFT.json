@@ -3,7 +3,10 @@
   "event Approval(address indexed,address indexed,uint256 indexed)",
   "event ApprovalForAll(address indexed,address indexed,bool)",
   "event OwnershipTransferred(address indexed,address indexed)",
+<<<<<<< HEAD
   "event RoyaltiesSet(uint256,tuple(address,uint96)[])",
+=======
+>>>>>>> 2bb4f20772382d2b9e6cc0d72e9f77b9ad81b669
   "event Transfer(address indexed,address indexed,uint256 indexed)",
   "function AirDrop(address)",
   "function addOwner(address)",
@@ -14,7 +17,10 @@
   "function baseURI() view returns (string)",
   "function createToken(address) returns (uint256)",
   "function getApproved(uint256) view returns (address)",
+<<<<<<< HEAD
   "function getRaribleV2Royalties(uint256) view returns (tuple(address,uint96)[])",
+=======
+>>>>>>> 2bb4f20772382d2b9e6cc0d72e9f77b9ad81b669
   "function isApprovedForAll(address,address) view returns (bool)",
   "function maxSupply() view returns (uint256)",
   "function name() view returns (string)",
@@ -23,12 +29,18 @@
   "function ownerOf(uint256) view returns (address)",
   "function rarity1_limit() view returns (uint256)",
   "function renounceOwnership()",
+<<<<<<< HEAD
   "function royaltyInfo(uint256,uint256) view returns (address, uint256)",
+=======
+>>>>>>> 2bb4f20772382d2b9e6cc0d72e9f77b9ad81b669
   "function safeTransferFrom(address,address,uint256)",
   "function safeTransferFrom(address,address,uint256,bytes)",
   "function setApprovalForAll(address,bool)",
   "function setAuctionAddress(address)",
+<<<<<<< HEAD
   "function setRoyalties(uint256,address,uint96)",
+=======
+>>>>>>> 2bb4f20772382d2b9e6cc0d72e9f77b9ad81b669
   "function supportsInterface(bytes4) view returns (bool)",
   "function symbol() view returns (string)",
   "function tokenByIndex(uint256) view returns (uint256)",

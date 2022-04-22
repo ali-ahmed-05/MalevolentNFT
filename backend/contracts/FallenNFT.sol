@@ -64,22 +64,23 @@ contract FallenNFT is IMalevolent, ERC721 , Ownable ,RoyaltiesV2Impl {
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        require(_exists(tokenId), "ERC721URIStorage: URI query for nonexistent token");
+        // require(_exists(tokenId), "ERC721URIStorage: URI query for nonexistent token");
 
         
-        string memory base = baseURI();
-        string memory _tokenURI = string(abi.encodePacked(base, toString(tokenId)));
+        // string memory base = baseURI();
+        // string memory _tokenURI = string(abi.encodePacked(base, toString(tokenId)));
 
-        // If there is no base URI, return the token URI.
-        if (bytes(base).length == 0) {
-            return _tokenURI;
-        }
-        // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
-        if (bytes(_tokenURI).length > 0) {
-            return string(abi.encodePacked(_tokenURI, ".json"));
-        }
+        // // If there is no base URI, return the token URI.
+        // if (bytes(base).length == 0) {
+        //     return _tokenURI;
+        // }
+        // // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
+        // if (bytes(_tokenURI).length > 0) {
+        //     return string(abi.encodePacked(_tokenURI, ".json"));
+        // }
 
-        return super.tokenURI(tokenId);
+        //return super.tokenURI(tokenId);
+        return "https://ipfs.io/ipfs/QmXPot2syTnmAm7sNfc5a894cicU6ebSNGPpM2FMeZyWZL?filename=2.json";
     }
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
