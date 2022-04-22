@@ -49,14 +49,14 @@ describe("malevolent nft ",  function ()  {
     await nFTCrowdsale.setAuctionAddress(auction.address)
     await auction.setNFTaddress(nFT2.address)
     await auction.setPaymentaddress(_.address)
-    
+    await nFTCrowdsale.startSale([deployer.address,per1.address],per3.address)
    
   });
  
   it("Should buy", async function () {
     
     let _value = await ethers.utils.parseEther('0.1')
-    await nFTCrowdsale.startSale([_.address,per1.address],per3.address)
+    
 
     await nFTCrowdsale.buyNFT(1,{value : _value})
    // await nFTCrowdsale.buyNFT(1,{value : _value})

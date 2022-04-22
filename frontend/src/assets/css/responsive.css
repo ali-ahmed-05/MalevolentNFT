@@ -1,0 +1,310 @@
+@media (max-width: 480px) {
+
+
+}
+
+@media (max-width: 767px) {
+
+    .logo-top{
+
+        display: none;
+
+    }
+
+    .main-title h1{
+
+        font-size: 2rem;
+        text-align: center;
+
+    }
+
+    .large-h2 {
+        font-size: 3rem;
+    }
+
+    .about-p p,.founders p {
+        font-size: 1rem;
+    }
+
+    .partners-logo img{
+
+        width: 100px;
+        padding: 20px 0;
+    }
+
+    .last-logo{
+
+        display: none;
+
+    }
+
+    .egg{
+
+        width: 120px;
+
+    }
+
+    .celestial-angels{
+
+        justify-content: center !important;
+
+    }
+
+    .section1 {
+
+        height: 85vh;
+
+    }
+
+    .opensea p{
+
+        margin-bottom: 20px !important;
+
+    }
+
+    .section1{
+        background: 25% 100% / contain no-repeat url(../images/home-page-characters.png), center / 100% 100% no-repeat url(../images/hero-bg.png);
+    }
+
+}
+
+@media (max-width: 768px) {
+
+
+   
+    .sidenav .menu-list{
+
+        width: 70%;
+
+    }
+
+    .sidenav .menu-list a {
+        font-size: 1.5rem;
+    }
+    
+    .social{
+
+        justify-content: center;
+
+    }
+    .slick-slide img{
+        height: 300px;
+    }
+   
+    .collection-section h1{
+
+        margin: 20px 0;
+    }
+
+    .footer-first{
+
+        flex-direction: column;
+        align-items: center;
+        
+        
+    }
+  
+
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+
+    .main-title h1{
+
+        font-size: 3rem;
+        text-align: center;
+
+    }
+
+    .large-h2 {
+        font-size: 3rem;
+    }
+
+    .about-p p,.founders p {
+        font-size: 1.5rem;
+    }
+
+    .partners-logo img{
+
+        width: 100px;
+        padding: 20px 0;
+    }
+
+
+}
+
+@media(max-width:991px){
+
+   .logo {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--white);
+
+   }
+
+   .closebtn{
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 36px;
+    text-decoration: none;
+    color: var(--white);
+    padding: 0 30px !important;
+    display: block;
+  
+  }
+
+   .opennav{
+
+    display: block;
+  
+  }
+
+  .sidenav{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    background-color: var(--black);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+
+    /* .custom-nav .navbar-collapse{
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 90%;
+        height: 100%;
+        background-color: var(--black);
+
+    } */
+
+    .custom-nav .navbar-nav{
+
+        align-items: flex-start;
+
+    }
+
+    .custom-nav .navbar-nav a{
+
+        padding: 10px 20px;
+
+    }
+
+    .custom-nav .top-social{
+
+        position: absolute;
+        bottom: 10px;
+
+    }
+
+    .last-logo img{
+
+        display: none;
+
+    }
+
+    .custom-btn{
+
+        font-size: 12px;
+        padding:5px 10px !important;
+
+    }
+
+    .social li {
+        margin-right: 8px;
+        width: 32px;
+        height: 32px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .social li a {
+        font-size: 12px;
+    }
+
+    .team-box{
+
+        margin-bottom: 30px;
+
+    }
+
+}
+
+@media (max-width: 1023px) and (min-width: 992px) {
+
+    .large-h2 {
+        font-size: 4rem;
+    
+    }
+
+    .about-p p {
+        font-size: 1.5rem;
+    }
+
+    .custom-btn{
+
+        font-size: 12px;
+        padding:5px 10px !important;
+
+    }
+
+    .social li {
+        margin-right: 8px;
+        width: 32px;
+        height: 32px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .social li a {
+        font-size: 12px;
+    }
+
+}
+
+@media (max-width: 1280px) and (min-width: 1024px) {
+
+
+    .large-h2 {
+        font-size: 4rem;
+    
+    }
+
+    .about-p p {
+        font-size: 1.5rem;
+    }
+
+}
+
+@media (max-width: 1400px) and (min-width: 1200px) {
+
+    .custom-btn span {
+        font-size: .8rem;
+    }
+
+}
+
+@media(min-width: 1440px) {
+}

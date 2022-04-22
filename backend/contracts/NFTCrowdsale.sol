@@ -118,7 +118,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     }
 
     function startPublisSale() private {
-        if(block.number > startTime + blocksPerDay){
+        if(block.number > startTime + 1){
             pub = true;
         }
     }
