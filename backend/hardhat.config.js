@@ -25,7 +25,17 @@ console.log(process.env.privateKey)
 // const privateKey = `669a00a5dcee6b12e70ec23b4a793b14bcb38a0f657ce29ada80b578e14743a7`
 
 module.exports = {
-  solidity: "0.8.0",
+  solidity: {
+    compilers: [
+      {
+        version: "0.7.0",
+      },
+      {
+        version: "0.8.0",
+        settings: {},
+      },
+    ],   
+}, 
   networks: {
     hardhat: {
       chainId: 1337,
@@ -49,7 +59,7 @@ module.exports = {
     path: '../frontend/src/contract',
     runOnCompile: true,
     clear: true,
-    only: [':NFT$', ':NFTsale$'],
+    only: [':Auction$', ':FallenNFT$',':GuardianNFT$', ':NFTCrowdsale$'],
     flat: true,
     spacing: 2,
     pretty: true,

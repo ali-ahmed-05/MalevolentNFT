@@ -6,10 +6,13 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@rarible/royalties/contracts/impl/RoyaltiesV2Impl.sol";
+import "@rarible/royalties/contracts/LibPart.sol";
+import "@rarible/royalties/contracts/LibRoyaltiesV2.sol";
 import "./interfaces/IMalevolent.sol";
 import "hardhat/console.sol";
 
-contract FallenNFT is IMalevolent, ERC721 , Ownable {
+contract FallenNFT is IMalevolent, ERC721 , Ownable ,RoyaltiesV2Impl {
     using Counters for Counters.Counter;
      using Strings for uint256;
       Counters.Counter private _tokenIds;
@@ -233,5 +236,37 @@ contract FallenNFT is IMalevolent, ERC721 , Ownable {
         return string(buffer);
     }
 
+    //configure royalties for Rariable
+    function setRoyalties(uint _tokenId, address payable _royaltiesRecipientAddress, uint96 _percentageBasisPoints) public onlyOwner {
+        LibPart.Part[] memory _royalties = new LibPart.Part[](1);
+        _royalties[0].value = _percentageBasisPoints;
+        _royalties[0].account = _royaltiesRecipientAddress;
+        _saveRoyalties(_tokenId, _royalties);
+    }
+
+
+    //configure royalties for Mintable using the ERC2981 standard
+    function royaltyInfo(uint256 _tokenId, uint256 _salePrice) external view returns (address receiver, uint256 royaltyAmount) {
+      //use the same royalties that were saved for Rariable
+      LibPart.Part[] memory _royalties = royalties[_tokenId];
+      if(_royalties.length > 0) {
+        return (_royalties[0].account, (_salePrice * _royalties[0].value) / 10000);
+      }
+      return (address(0), 0);
+    }
+
+    bytes4 private constant _INTERFACE_ID_ERC2981 = 0x2a55205a;
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721) returns (bool) {
+        if(interfaceId == LibRoyaltiesV2._INTERFACE_ID_ROYALTIES) {
+            return true;
+        }
+
+        if(interfaceId == _INTERFACE_ID_ERC2981) {
+          return true;
+        }
+
+        return super.supportsInterface(interfaceId);
+    }
 
 }

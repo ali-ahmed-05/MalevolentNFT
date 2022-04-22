@@ -58,7 +58,7 @@ describe("malevolent nft ",  function ()  {
     let _value = await ethers.utils.parseEther('0.1')
     await nFTCrowdsale.startSale([_.address,per1.address],per3.address)
 
-    await nFTCrowdsale.buyNFT(1,{value : _value})
+    await nFTCrowdsale.buyNFT(2,{value : _value})
    // await nFTCrowdsale.buyNFT(1,{value : _value})
     
 //    // await nFTCrowdsale.buyNFT(1,{value : _value})
@@ -67,7 +67,7 @@ describe("malevolent nft ",  function ()  {
 //     //await nFTCrowdsale.buyNFT(2,{value : _value})
     await mineNBlocks(6647)
     _value = await ethers.utils.parseEther('0.2')
-    await nFTCrowdsale.buyNFT(1,{value : _value})
+    await nFTCrowdsale.buyNFT(2,{value : _value})
     await nFTCrowdsale.buyNFT(2,{value : _value})
     // await nFTCrowdsale.buyNFT(2,{value : _value})
 
