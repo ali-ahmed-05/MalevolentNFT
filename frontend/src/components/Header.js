@@ -50,7 +50,7 @@ function Header() {
           <Nav>
               <a href="#about-section">About</a>
               <a href="#roadmap-section">Roadmap</a>
-              <a href="#drawing-concept-section">Concept</a>
+              <a href="#drawing-concept-section">Drawing Concept</a>
               <a href="#team-section">Team</a>
               <a href="#collection-section">Collections</a>
               <a href="#faqs-section">FAQ</a>

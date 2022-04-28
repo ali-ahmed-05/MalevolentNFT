@@ -77,20 +77,21 @@ const Collection = () => {
                     </div>
                     <div className="grid-child z-index-plus-1 align-self-center text-center">
                         <div className="collection text-center">
-                        {active
-                                ? (
-                                    <button className="btn btn-primary btn-wallet p-2 mb-0 mb-md-3">CONNECTED</button>
-                                ) :<button onClick={(e) => {
-                                    connectWallet(activate, "Error");
-                                    e.preventDefault()
-                                }} className="btn btn-primary btn-wallet p-2 mb-0 mb-md-3">CONNECT YOUR WALLET</button>
-                            }
+                        
                            
                             {/* <img src={collection_heading} /> */}
                             <div>
                                 <h1>COLLECTIONS</h1>
-                                <img className="celestial-angels" src={celestialAngels} />
+                                {/* <img className="celestial-angels" src={celestialAngels} style={{border:"1px solid red"}} /> */}
                             </div>
+                            {active
+                                ? (
+                                    <button style={{padding:"20px 20px 20px 20px"}} className="btn btn-primary btn-wallet p-3 mb-0 mb-md-3">CONNECTED</button>
+                                ) :<button style={{padding:"20px 20px 20px 20px"}} onClick={(e) => {
+                                    connectWallet(activate, "Error");
+                                    e.preventDefault()
+                                }} className="btn btn-primary btn-wallet mb-0 mb-md-3">CONNECT YOUR WALLET</button>
+                            }
                         </div>
                     </div>
 

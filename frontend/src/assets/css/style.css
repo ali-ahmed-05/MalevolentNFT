@@ -96,6 +96,16 @@ a {
 
 }
 
+#hh{
+  /* background-color: blue !important; */
+  background-image: url("../images/btnimage.png");
+  /* background-color: #0f76182d; */
+  background-position: center left;
+  /* background-image : var(--blue); */
+
+
+}
+
 body {
 
   /* overflow: hidden; */
@@ -226,7 +236,7 @@ body {
 
 .section1 {
 
-  background: 25% 100% / contain no-repeat url(../images/home-page-characters.png), 25% 100% / cover no-repeat url(../images/hero-bg.png);
+  background: 25% 100% / contain no-repeat url(../images/characters.png), 25% 100% / cover no-repeat url(../images/hero-bg.png);
   width: 100%;
   /* margin-top: -67px; */
   height: 95vh
@@ -656,6 +666,12 @@ body {
   padding: 10px 30px !important;
 }
 
+#btnPic{
+  background-image: url("../images/background-road-map-1.png");
+  background-color: blue !important;
+  /* border: 1px solid red; */
+}
+
 .section2 {
   padding: 6rem 0;
 }
@@ -678,14 +694,14 @@ body {
   object-fit: contain;
 }
 
-.girl-section-container {
-  /* height: 1200px; */
-  /* width: 100%; */
+/* .girl-section-container {
+  height: 1200px;
+  width: 100%;
   z-index: 1;
   position: relative;
   background: center / cover no-repeat url(../images/background-road-map-1.png);
-  ;
-}
+
+} */
 
 .faqs h1 {
   font-family: 'Dark College';
@@ -707,7 +723,7 @@ h3 {
 }
 
 .footer-section {
-  background-color: #404040;
+  background-color: black;
 }
 
 .footer-first{
@@ -741,7 +757,8 @@ align-items: center;
 }
 
 .collection {
-  margin-bottom: 3rem;
+  /* margin-bottom: 5rem; */
+
 }
 
 .collection-section .celestial-angels {
@@ -810,6 +827,12 @@ align-items: center;
   bottom: 65px;
 }
 
+#team-section{
+
+  background: #030303;
+
+}
+
 .team-section {
   margin-bottom: 7rem;
 }
@@ -826,6 +849,13 @@ align-items: center;
   bottom: -60px;
 }
 
+#drawing-concept-section .work-arrow {
+
+  bottom: -50px;
+  padding: 6rem 0;
+
+}
+
 #faqs-section .work-arrow {
   bottom: 40px;
 }
@@ -839,7 +869,7 @@ align-items: center;
 }
 
 .team {
-  padding: 10rem 0;
+  padding: -23rem 0;
 }
 
 .roadmap-section .grid-parent {

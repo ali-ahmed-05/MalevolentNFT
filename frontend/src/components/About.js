@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import about from "../assets/images/about.png";
 import aboutVideo from "../assets/images/about-video.mp4";
+import about_Video from "../assets/images/about_video.mp4";
 import DownArrow from "./DownArrow";
 
 const About = () => {
@@ -23,7 +24,7 @@ const About = () => {
 
                 <Col lg={6} className="pe-0 align-self-center">
                     {/* <img src={about} /> */}
-                    <video className="mt-5 w-100" src={aboutVideo} loop={true} autoPlay={true} muted={true} controls={false} playsInline>
+                    <video className="mt-5 w-100" src={about_Video} loop={true} autoPlay={true} muted={true} controls={false} playsInline>
 
                     </video>
 

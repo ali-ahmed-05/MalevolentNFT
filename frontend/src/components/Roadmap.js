@@ -4,6 +4,8 @@ import logoGuardian from "../assets/images/logo-guardian-1.png"
 import logoFallen from "../assets/images/logo-fallen-1.png"
 import logoPixel from "../assets/images/logo-pixel-1.png"
 import { Container } from "react-bootstrap"
+import DrawingConcept from "./DrawingConcept"
+import DownArrow from "./DownArrow"
 
 const RoadmapDesktop = () => {
     return (
@@ -57,6 +59,15 @@ const RoadmapDesktop = () => {
 
                 </div>
             </div>
+
+            <div id="drawing-concept-section" className="position-relative" style={{
+                 paddingBottom:"5rem"}}>
+                <DrawingConcept />
+                <DownArrow to="team-section" />
+            </div>
+
+           
+
         </section>
     )
 }

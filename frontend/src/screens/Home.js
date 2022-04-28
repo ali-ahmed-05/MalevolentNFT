@@ -3,6 +3,8 @@ import { Col, Container, Row, Accordion } from "react-bootstrap";
 import Logo from "../assets/images/logo 2.png";
 import opensea from "../assets/images/opensea.svg";
 import Header from "../components/Header"
+import btnPic from "../assets/images/background-road-map-1.png"
+import btnImg from "../assets/images/btnimage.png"
 import Team from "../components/Team";
 import FAQs from "../components/FAQs";
 import DownArrow from "../components/DownArrow";
@@ -96,9 +98,11 @@ function Home() {
 
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim addfgfsdsshfjshkjvnbn</p>
 
-                                    <a href="https://opensea.io/" target="_blank" className="primary-btn custom-btn image-btn">
+                                    <a href="https://opensea.io/" id="btnPic" target="_blank" className="primary-btn custom-btn image-btn" id="hh">
                                         <img src={opensea} /><span className="">Open Sea</span>
                                     </a>
+
+                                    
                                 </div>
 
 
@@ -158,17 +162,16 @@ function Home() {
 
                 <div id="roadmap-section" className="position-relative">
                     <Roadmap />
-                    <DownArrow to="drawing-concept-section" />
+                    
+
+                    
+
                 </div>
 
 
 
                 <section className="girl-section-container py-5 pt-0">
-                    <div id="drawing-concept-section" className="position-relative">
-                        <DrawingConcept />
-                        <DownArrow to="team-section" />
-                    </div>
-
+                   
                     <div id="team-section" className="position-relative">
                         <Team />
                         <DownArrow to="collection-section" />

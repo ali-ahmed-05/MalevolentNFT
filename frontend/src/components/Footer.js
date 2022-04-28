@@ -19,18 +19,18 @@ function Footer() {
                 <Col xs={12} md={6} lg={3} className="footer-first">
                     
                         
-                            <img src={logo_3} className="footer-logo"/>
+                            <img src={logo_3} className="footer-logo" />
                        
 
                       
-                            <img src={name_1} />
+                            <img src={name_1} width="60%"  />
                         
 
                     
                 </Col>
 
                 <Col md={6} lg={3}>
-                    <Row className="align-items-center h-100 gap-4 gap-md-0">
+                    <Row className="align-items-center h-100 gap-4 gap-md-0" >
                         <Col>
                             <img src={logo_fallen_1} className="footer-logo"/>
                         </Col>
@@ -55,7 +55,7 @@ function Footer() {
                             <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
                             <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
                             <li><a href=""><i class="fa-brands fa-discord"></i></a></li>
-                            <li><a href=""><img src={opensea} /></a></li>
+                            <li style={{paddingBottom:"2px"}}><a href=""><img src={opensea} /></a></li>
                         </ul>
                     </div>
                 </Col>
